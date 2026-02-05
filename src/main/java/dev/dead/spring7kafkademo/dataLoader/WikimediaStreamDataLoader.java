@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.Duration;
 import java.time.Instant;
 
 @Service
@@ -28,8 +29,9 @@ public class WikimediaStreamDataLoader {
     public void loadWikimediaDataStream() {
         webclient.get()
                 .retrieve()
-                .bodyToMono(String.class)
-                // publish StreamDataLoadedEvent
+                .bodyToFlux(String.class)
+                .delayElements(Duration.ofSeconds(2))
+                // publish StreamDataLoadedEvent for each event
                 .subscribe((data) -> {
                     applicationEventPublisher.publishEvent(StreamDataLoadedEvent.builder()
                             .message(data)

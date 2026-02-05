@@ -1,4 +1,7 @@
 spring:
+  docker:
+    compose:
+      lifecycle-management: start-only
   application:
     name: kafka-producer
   kafka:
