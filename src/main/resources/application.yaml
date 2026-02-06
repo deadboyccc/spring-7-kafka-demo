@@ -1,7 +1,6 @@
 # Turn off kafka logging
 logging:
   level:
-    root: OFF
     org:
       apache:
         kafka: OFF
